@@ -13,7 +13,7 @@ export default function LogInForm() {
   } = useForm<z.infer<typeof logInSchema>>({
     resolver: zodResolver(logInSchema),
     defaultValues: {
-      user: "",
+      email: "",
       password: "",
     },
   });
@@ -24,17 +24,17 @@ export default function LogInForm() {
 
   return (
     <form className="flex flex-col" onSubmit={handleSubmit(onSubmitFn)}>
-      <label className="font-medium" htmlFor="user">
-        User
+      <label className="font-medium" htmlFor="email">
+        Email
       </label>
       <input
         className="px-2 py-1rounded-lg outline outline-slate-700 focus:outline-slate-500"
         type="text"
-        id="user"
-        autoComplete="username"
-        {...register("user")}
+        id="email"
+        autoComplete="email"
+        {...register("email")}
       />
-      <p className="mb-6 text-sm text-red-500 ">{errors.user?.message}</p>
+      <p className="mb-6 text-sm text-red-500 ">{errors.email?.message}</p>
       <label className="font-medium" htmlFor="password">
         Password
       </label>
