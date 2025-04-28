@@ -9,16 +9,17 @@ export default {
         password: { type: "password" },
       },
       authorize: async (credentials) => {
+        console.log(credentials);
         // let user = null;
         // const pwHash = saltAndHashPassword(credentials.password);
         // user = await getUserFromDb(credentials.email, pwHash);
         // if (!user) {
         //   throw new  Error("Invalid credentials.");
         // }
-        throw new Error("Invalid credentials.");
         return {
           id: "1",
           email: "test@test.com",
+          name: "Test User",
         };
       },
     }),
