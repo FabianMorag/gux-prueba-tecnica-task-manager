@@ -1,9 +1,10 @@
 "use client";
 
-import { logInSchema } from "@/app/lib/zod";
+import { logInSchema } from "@app/lib/zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
+import { logInAction } from "@app/actions/loginAction";
 
 export default function LogInForm() {
   const {
@@ -18,8 +19,9 @@ export default function LogInForm() {
     },
   });
 
-  const onSubmitFn = (values: z.infer<typeof logInSchema>) => {
-    console.log(values);
+  const onSubmitFn = async (values: z.infer<typeof logInSchema>) => {
+    const response = await logInAction(values);
+    console.log(response);
   };
 
   return (
@@ -51,7 +53,7 @@ export default function LogInForm() {
         className="w-full px-3 py-2 text-white rounded-full cursor-pointer text-bold bg-slate-700 hover:bg-slate-600"
         type="submit"
       >
-        Login
+        Log in
       </button>
     </form>
   );
