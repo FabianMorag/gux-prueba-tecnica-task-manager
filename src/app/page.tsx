@@ -1,9 +1,9 @@
-import LogInForm from "@/app/components/loginform";
+import LogInForm from "@/components/loginform";
 
 /* eslint-disable @next/next/no-img-element */
 export default function Home() {
   return (
-    <main className="flex flex-col items-center h-screen px-6 pt-24 md:pt-36">
+    <main className="flex flex-col items-center min-h-screen px-6 py-24 md:py-36">
       <img
         className="mb-16 w-96"
         src="https://gux.tech/wp-content/uploads/2023/04/Logo-GUX-white.png"
