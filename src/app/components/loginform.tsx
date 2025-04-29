@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import { logInAction } from "@app/actions/loginAction";
+import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 
 export default function LogInForm() {
   const {
@@ -18,14 +20,23 @@ export default function LogInForm() {
       password: "",
     },
   });
+  const [error, setError] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
-  const onSubmitFn = async (values: z.infer<typeof logInSchema>) => {
-    const response = await logInAction(values);
-    console.log(response);
+  const onSubmitFn = (values: z.infer<typeof logInSchema>) => {
+    startTransition(async () => {
+      const response = await logInAction(values);
+      if (response.error) setError(response.error);
+      else router.push("/dashboard");
+    });
   };
 
   return (
-    <form className="flex flex-col" onSubmit={handleSubmit(onSubmitFn)}>
+    <form
+      className="flex flex-col min-w-96"
+      onSubmit={handleSubmit(onSubmitFn)}
+    >
       <label className="font-medium" htmlFor="email">
         Email
       </label>
@@ -36,7 +47,7 @@ export default function LogInForm() {
         autoComplete="email"
         {...register("email")}
       />
-      <p className="mb-6 text-sm text-red-500 ">{errors.email?.message}</p>
+      <span className="mb-6 text-sm text-red-500">{errors.email?.message}</span>
       <label className="font-medium" htmlFor="password">
         Password
       </label>
@@ -47,11 +58,20 @@ export default function LogInForm() {
         autoComplete="current-password"
         {...register("password")}
       />
-      <p className="mb-6 text-sm text-red-500 ">{errors.password?.message}</p>
+      <span className="mb-6 text-sm text-red-500">
+        {errors.password?.message}
+      </span>
+
+      {error && (
+        <span className="text-sm text-center text-red-500">
+          User credentials are incorrect
+        </span>
+      )}
 
       <button
         className="w-full px-3 py-2 text-white rounded-full cursor-pointer text-bold bg-slate-700 hover:bg-slate-600"
         type="submit"
+        disabled={isPending}
       >
         Log in
       </button>

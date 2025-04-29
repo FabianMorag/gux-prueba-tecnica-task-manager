@@ -1,4 +1,4 @@
-import LogInForm from "@app/components/loginform";
+import Link from "next/link";
 
 /* eslint-disable @next/next/no-img-element */
 export default function Home() {
@@ -9,11 +9,18 @@ export default function Home() {
         src="https://gux.tech/wp-content/uploads/2023/04/Logo-GUX-white.png"
         alt="Gux logo"
       />
-      <div className="w-full p-8 rounded-lg shadow-lg md:w-auto md:p-24 bg-slate-900 outline-slate-800 outline-2">
-        <h1 className="mb-8 text-3xl font-bold text-center">Login</h1>
-
-        <LogInForm />
-      </div>
+      <h1 className="mb-24 text-3xl font-bold text-center">
+        Welcome to the task manager
+      </h1>
+      <Link
+        className="px-3 py-2 mb-8 text-center text-white rounded-full cursor-pointer w-72 text-bold bg-slate-700 hover:bg-slate-600"
+        href="/signin"
+      >
+        Sign in
+      </Link>
+      <Link className="underline" href="/register">
+        I am a new user
+      </Link>
     </main>
   );
 }
