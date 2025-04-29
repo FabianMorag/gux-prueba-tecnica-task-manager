@@ -1,22 +1,23 @@
-import { NextRequest } from "next/server";
-import authConfig from "./auth.config";
-import NextAuth from "next-auth";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { auth } from "@/auth";
+import { PUBLIC_ROUTES } from "@/src/app/constants";
 
-// Use only one of the two middleware options below
-// 1. Use middleware directly
-// export const { auth: middleware } = NextAuth(authConfig)
-
-// 2. Wrapped middleware option
-const { auth } = NextAuth(authConfig);
 export default auth(async function middleware(req: NextRequest) {
-  // Your custom middleware logic goes here
+  console.log("hola");
+  const { nextUrl } = req;
+  const session = await auth();
+  const isLoggedIn = session?.user;
+
+  if (!isLoggedIn && !PUBLIC_ROUTES.includes(nextUrl.pathname))
+    return NextResponse.redirect(new URL("/", req.url));
+
+  return NextResponse.next();
 });
 
 export const config = {
   matcher: [
-    // Skip Next.js internals and all static files, unless found in search params
     "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
-    // Always run for API routes
     "/(api|trpc)(.*)",
   ],
 };
