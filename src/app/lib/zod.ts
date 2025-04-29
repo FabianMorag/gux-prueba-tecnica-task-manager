@@ -1,6 +1,6 @@
 import { object, string } from "zod";
 
-export const logInSchema = object({
+export const formSchema = object({
   email: string({ required_error: "Email is required" })
     .min(1, "User is required")
     .email("Invalid email address"),

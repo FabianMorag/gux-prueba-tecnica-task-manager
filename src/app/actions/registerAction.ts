@@ -1,5 +1,5 @@
 "use server";
-import { logInSchema } from "@app/lib/zod";
+import { formSchema } from "@app/lib/zod";
 import { z } from "zod";
 import { prismaClient } from "@app/lib/prisma";
 import bcrypt from "bcryptjs";
@@ -7,10 +7,10 @@ import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
 
 export const registerAction = async (
-  credentials: z.infer<typeof logInSchema>
+  credentials: z.infer<typeof formSchema>
 ) => {
   try {
-    const { data, success } = logInSchema.safeParse(credentials);
+    const { data, success } = formSchema.safeParse(credentials);
 
     if (!success) return { error: "Invalid data." };
 
