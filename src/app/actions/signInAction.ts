@@ -10,7 +10,7 @@ export const signInAction = async (data: z.infer<typeof formSchema>) => {
     return { status: 200 };
   } catch (error) {
     if (error instanceof AuthError) {
-      return { error: error.cause };
+      return { error: error.cause?.err?.message };
     }
     return { status: 500, error: "Something went wrong" };
   }

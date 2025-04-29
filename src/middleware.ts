@@ -1,9 +1,16 @@
 import type { NextRequest } from "next/server";
+import NextAuth from "next-auth";
+import authConfig from "@/auth.config";
 
 export const config = {
-  matcher: ["/"],
+  matcher: [
+    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+    "/(api|trpc)(.*)",
+  ],
 };
 
-export default async function middleware(req: NextRequest) {
+const { auth } = NextAuth(authConfig);
+
+export default auth(async function middleware(req: NextRequest) {
   console.log("hola");
-}
+});
