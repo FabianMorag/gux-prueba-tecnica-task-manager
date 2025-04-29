@@ -1,5 +1,8 @@
 import type { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import { prismaClient } from "./src/app/lib/prisma";
+import { logInSchema } from "./src/app/lib/zod";
+import bcrypt from "bcryptjs";
 
 export default {
   providers: [
@@ -9,18 +12,22 @@ export default {
         password: { type: "password" },
       },
       authorize: async (credentials) => {
-        console.log(credentials);
-        // let user = null;
-        // const pwHash = saltAndHashPassword(credentials.password);
-        // user = await getUserFromDb(credentials.email, pwHash);
-        // if (!user) {
-        //   throw new  Error("Invalid credentials.");
-        // }
-        return {
-          id: "1",
-          email: "test@test.com",
-          name: "Test User",
-        };
+        const { data, success } = logInSchema.safeParse(credentials);
+
+        if (!success) {
+          throw new Error("Invalid credentials.");
+        }
+
+        const user = await prismaClient.user.findUnique({
+          where: { email: data.email },
+        });
+
+        if (!user || !user.password) throw new Error("User not found.");
+
+        const isValidUser = await bcrypt.compare(data.password, user.password);
+
+        if (!isValidUser) throw new Error("Invalid credentials.");
+        return user;
       },
     }),
   ],

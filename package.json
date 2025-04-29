@@ -13,6 +13,7 @@
     "@fontsource-variable/merriweather-sans": "^5.2.5",
     "@hookform/resolvers": "^5.0.1",
     "@prisma/client": "^6.6.0",
+    "bcryptjs": "^3.0.2",
     "next": "15.3.1",
     "next-auth": "^5.0.0-beta.27",
     "react": "^19.0.0",
