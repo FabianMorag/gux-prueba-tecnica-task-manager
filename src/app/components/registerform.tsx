@@ -41,7 +41,7 @@ export default function RegisterForm() {
         Email
       </label>
       <input
-        className="px-2 py-1rounded-lg outline outline-slate-700 focus:outline-slate-500"
+        className="px-2 py-1 rounded-lg outline outline-slate-700 rounded focus:outline-slate-500"
         type="text"
         id="email"
         autoComplete="email"
@@ -52,7 +52,7 @@ export default function RegisterForm() {
         Password
       </label>
       <input
-        className="px-2 py-1rounded-lg outline outline-slate-700 focus:outline-slate-500"
+        className="px-2 py-1 rounded-lg outline outline-slate-700 rounded focus:outline-slate-500"
         type="password"
         id="password"
         autoComplete="current-password"
