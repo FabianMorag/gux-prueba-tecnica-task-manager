@@ -4,11 +4,13 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main className="flex flex-col items-center min-h-screen px-6 py-24 md:py-36">
-      <img
-        className="mb-16 w-96"
-        src="https://gux.tech/wp-content/uploads/2023/04/Logo-GUX-white.png"
-        alt="Gux logo"
-      />
+      <Link href="/">
+        <img
+          className="mb-16 w-96"
+          src="https://gux.tech/wp-content/uploads/2023/04/Logo-GUX-white.png"
+          alt="Gux logo"
+        />
+      </Link>
       <h1 className="mb-24 text-3xl font-bold text-center">
         Welcome to the task manager
       </h1>

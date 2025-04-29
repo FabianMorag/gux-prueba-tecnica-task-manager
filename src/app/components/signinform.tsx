@@ -4,11 +4,11 @@ import { logInSchema } from "@app/lib/zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
-import { logInAction } from "@app/actions/loginAction";
+import { signInAction } from "@/src/app/actions/signInAction";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 
-export default function LogInForm() {
+export default function SignInForm() {
   const {
     register,
     handleSubmit,
@@ -26,7 +26,7 @@ export default function LogInForm() {
 
   const onSubmitFn = (values: z.infer<typeof logInSchema>) => {
     startTransition(async () => {
-      const response = await logInAction(values);
+      const response = await signInAction(values);
       if (response.error) setError(response.error);
       else router.push("/dashboard");
     });
@@ -73,7 +73,7 @@ export default function LogInForm() {
         type="submit"
         disabled={isPending}
       >
-        Log in
+        Sign in
       </button>
     </form>
   );

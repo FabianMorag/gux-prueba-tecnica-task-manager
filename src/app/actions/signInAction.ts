@@ -4,7 +4,7 @@ import { logInSchema } from "@app/lib/zod";
 import { AuthError } from "next-auth";
 import { z } from "zod";
 
-export const logInAction = async (data: z.infer<typeof logInSchema>) => {
+export const signInAction = async (data: z.infer<typeof logInSchema>) => {
   try {
     await signIn("credentials", { ...data, redirect: false });
     return { status: 200 };
