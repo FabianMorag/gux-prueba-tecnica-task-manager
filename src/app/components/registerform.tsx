@@ -1,12 +1,12 @@
 "use client";
 
-import { formSchema } from "@app/lib/zod";
+import { formSchema } from "@/app/lib/zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { registerAction } from "../actions/registerAction";
+import { registerAction } from "@/app/actions/registerAction";
 
 export default function RegisterForm() {
   const {

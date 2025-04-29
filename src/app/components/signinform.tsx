@@ -1,10 +1,10 @@
 "use client";
 
-import { formSchema } from "@app/lib/zod";
+import { formSchema } from "@/app/lib/zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
-import { signInAction } from "@/src/app/actions/signInAction";
+import { signInAction } from "@/app/actions/signInAction";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 

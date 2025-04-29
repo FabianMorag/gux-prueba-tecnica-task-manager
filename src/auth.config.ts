@@ -1,7 +1,7 @@
 import type { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { prismaClient } from "./src/app/lib/prisma";
-import { formSchema } from "./src/app/lib/zod";
+import { prismaClient } from "@/app/lib/prisma";
+import { formSchema } from "@/app/lib/zod";
 import bcrypt from "bcryptjs";
 
 export default {

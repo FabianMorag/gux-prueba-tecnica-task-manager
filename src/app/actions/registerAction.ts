@@ -1,7 +1,7 @@
 "use server";
-import { formSchema } from "@app/lib/zod";
+import { formSchema } from "@/app/lib/zod";
 import { z } from "zod";
-import { prismaClient } from "@app/lib/prisma";
+import { prismaClient } from "@/app/lib/prisma";
 import bcrypt from "bcryptjs";
 import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
@@ -30,7 +30,7 @@ export const registerAction = async (
     return { status: 200 };
   } catch (error) {
     if (error instanceof AuthError) {
-      return { error: error.cause?.err?.message };
+      return { error: error.cause };
     }
     return { status: 500, error: "Something went wrong" };
   }
