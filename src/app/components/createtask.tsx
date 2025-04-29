@@ -1,14 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
-import { createTaskFormSchema } from "../lib/zod";
+import { createTaskFormSchema } from "@/app/lib/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import { STATUS } from "@/app/constants";
 
 export default function CreateTask() {
   const [openedDialog, setOpenedDialog] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
   const {
     register,
     handleSubmit,
@@ -16,7 +18,7 @@ export default function CreateTask() {
   } = useForm<z.infer<typeof createTaskFormSchema>>({
     resolver: zodResolver(createTaskFormSchema),
     defaultValues: {
-      taskName: "",
+      title: "",
       description: "",
       status: "todo",
     },
@@ -29,71 +31,118 @@ export default function CreateTask() {
     setOpenedDialog(false);
   };
 
-  const handleCreateTask = () => {
-    // throw new Error("Function not implemented.");
+  const handleCreateTask = (values: z.infer<typeof createTaskFormSchema>) => {
+    startTransition(async () => {
+      fetch("/api/task", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setOpenedDialog(false);
+        })
+        .catch((err) => {
+          setError(err);
+        });
+    });
   };
 
   return (
     <>
       <button
-        className="bg-slate-100 text-slate-950 rounded-full w-auto px-3 py-2 hover:cursor-pointer hover:bg-slate-200"
+        className="w-auto px-3 py-2 rounded-full bg-slate-100 text-slate-950 hover:cursor-pointer hover:bg-slate-200"
         onClick={handleCloseDialog}
       >
         Create task
       </button>
       <dialog
-        className="p-6 h-screen w-screen top-0 text-white place-content-center place-items-center bg-slate-950/50"
+        className="top-0 w-screen h-screen p-6 text-white place-content-center place-items-center bg-slate-950/50"
         open={openedDialog}
       >
-        <div className="bg-slate-800 p-4 rounded-lg w-full max-w-xl">
+        <div className="relative w-full max-w-xl px-4 py-6 rounded-lg bg-slate-800">
           <form
-            className="flex flex-col gap-2 mb-6"
-            onSubmit={handleCreateTask}
+            className="flex flex-col gap-3"
+            onSubmit={handleSubmit(handleCreateTask)}
           >
-            <h2 className="text-center text-xl">Task</h2>
-            <label htmlFor="taskName">Task name</label>
+            <h2 className="text-xl text-center">Task</h2>
+            <label htmlFor="taskTitle">Task title</label>
             <input
-              className="px-2 mb-2 py-1 rounded-lg  bg-slate-900 focus:outline-slate-600 outline outline-slate-700"
+              className="px-2 py-1 rounded-lg bg-slate-900 focus:outline-slate-600 outline outline-slate-700"
               type="text"
-              name="taskName"
-              id="taskName"
+              id="taskTitle"
+              {...register("title")}
             />
+            {errors.title?.message && (
+              <span className="text-sm text-red-500">
+                {errors.title?.message}
+              </span>
+            )}
 
             <label htmlFor="taskDescription">Description</label>
             <textarea
-              className="px-2 mb-2 py-1 rounded-lg  bg-slate-900 focus:outline-slate-600 outline outline-slate-700 field-sizing-content"
-              name="taskDescription"
+              className="px-2 py-1 rounded-lg bg-slate-900 focus:outline-slate-600 outline outline-slate-700 field-sizing-content"
               id="taskDescription"
+              {...register("description")}
             />
 
             <label htmlFor="taskStatus">Status</label>
             <select
-              className="bg-slate-900 p-2 rounded-lg"
+              className="p-2 mb-4 rounded-lg bg-slate-900"
               name="taskStatus"
               id="taskStatus"
             >
-              <option value={STATUS.TODO} defaultChecked>
+              <option
+                value={STATUS.TODO}
+                defaultChecked
+                {...register("status")}
+              >
                 To do
               </option>
               <option value={STATUS.IN_PROGRESS}>In progress</option>
               <option value={STATUS.DONE}>Done</option>
             </select>
+            <span>{error}</span>
+            <div className="flex justify-end gap-2">
+              <button
+                className="px-3 py-2 rounded-full hover:cursor-pointer bg-slate-50 text-slate-950 hover:bg-slate-200"
+                type="submit"
+                disabled={isPending}
+              >
+                Save task
+              </button>
+              <button
+                className="px-3 py-2 rounded-full hover:cursor-pointer bg-slate-700 text-slate-200 hover:bg-slate-600"
+                type="button"
+                onClick={HandleCloseDialog}
+                disabled={isPending}
+              >
+                Close
+              </button>
+            </div>
           </form>
-
-          <div className="flex justify-end gap-2">
-            <button
-              className="hover:cursor-pointer bg-slate-50 text-slate-950 px-3 py-2 rounded-full hover:bg-slate-200"
-              type="submit"
-            >
-              Save task
-            </button>
-            <button
-              className="hover:cursor-pointer bg-slate-700 text-slate-200 px-3 py-2 rounded-full hover:bg-slate-600"
-              onClick={HandleCloseDialog}
-            >
-              Close
-            </button>
-          </div>
+          {isPending && (
+            <div className="absolute inset-0 grid w-full h-full place-items-center bg-slate-950/50">
+              <svg
+                className="animate-spin"
+                xmlns="http://www.w3.org/2000/svg"
+                width={48}
+                height={48}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M12 3a9 9 0 1 0 9 9" />
+              </svg>
+            </div>
+          )}
         </div>
       </dialog>
     </>

@@ -10,10 +10,10 @@ export const signInFormSchema = object({
 });
 
 export const createTaskFormSchema = object({
-  taskName: string({ required_error: "Task need a name" }).min(
+  title: string({ required_error: "Task title is required" }).min(
     1,
-    "User is required"
+    "Task title is required"
   ),
   description: string().optional(),
-  status: string().optional(),
+  status: string(),
 });
