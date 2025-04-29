@@ -1,7 +1,7 @@
 import type { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { prismaClient } from "@/app/lib/prisma";
-import { formSchema } from "@/app/lib/zod";
+import { signInFormSchema } from "@/app/lib/zod";
 import bcrypt from "bcryptjs";
 
 export default {
@@ -12,7 +12,7 @@ export default {
         password: { type: "password" },
       },
       authorize: async (credentials) => {
-        const { data, success } = formSchema.safeParse(credentials);
+        const { data, success } = signInFormSchema.safeParse(credentials);
 
         if (!success) {
           throw new Error("Invalid credentials.");

@@ -1,10 +1,10 @@
 "use server";
 import { signIn } from "@/auth";
-import { formSchema } from "@/app/lib/zod";
+import { signInFormSchema } from "@/app/lib/zod";
 import { AuthError } from "next-auth";
 import { z } from "zod";
 
-export const signInAction = async (data: z.infer<typeof formSchema>) => {
+export const signInAction = async (data: z.infer<typeof signInFormSchema>) => {
   try {
     await signIn("credentials", { ...data, redirect: false });
     return { status: 200 };

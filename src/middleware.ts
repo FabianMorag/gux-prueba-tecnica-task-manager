@@ -24,6 +24,4 @@ export default auth(async function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL("/", req.url));
     }
   }
-
-  console.log({ token });
 });

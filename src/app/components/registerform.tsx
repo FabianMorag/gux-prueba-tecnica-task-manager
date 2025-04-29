@@ -1,6 +1,6 @@
 "use client";
 
-import { formSchema } from "@/app/lib/zod";
+import { signInFormSchema } from "@/app/lib/zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
@@ -13,8 +13,8 @@ export default function RegisterForm() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  } = useForm<z.infer<typeof signInFormSchema>>({
+    resolver: zodResolver(signInFormSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -24,7 +24,7 @@ export default function RegisterForm() {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
-  const onSubmitFn = (values: z.infer<typeof formSchema>) => {
+  const onSubmitFn = (values: z.infer<typeof signInFormSchema>) => {
     startTransition(async () => {
       const response = await registerAction(values);
       if (response.error) setError(response.error);
