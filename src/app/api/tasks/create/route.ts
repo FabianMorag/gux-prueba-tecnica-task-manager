@@ -1,10 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 import { prismaClient } from "@/app/lib/prisma";
 import { getToken } from "next-auth/jwt";
-
-export async function GET(request: Request) {
-  console.log(request);
-}
 
 export async function POST(req: NextRequest) {
   const json = await req.json();

@@ -20,7 +20,7 @@ export default function CreateTask() {
     defaultValues: {
       title: "",
       description: "",
-      status: "todo",
+      status: STATUS.TODO.id,
     },
   });
 
@@ -33,7 +33,7 @@ export default function CreateTask() {
 
   const handleCreateTask = (values: z.infer<typeof createTaskFormSchema>) => {
     startTransition(async () => {
-      fetch("/api/task", {
+      fetch("/api/tasks/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -92,18 +92,14 @@ export default function CreateTask() {
             <label htmlFor="taskStatus">Status</label>
             <select
               className="p-2 mb-4 rounded-lg bg-slate-900"
-              name="taskStatus"
               id="taskStatus"
+              {...register("status")}
             >
-              <option
-                value={STATUS.TODO}
-                defaultChecked
-                {...register("status")}
-              >
+              <option value={STATUS.TODO.id} defaultChecked>
                 To do
               </option>
-              <option value={STATUS.IN_PROGRESS}>In progress</option>
-              <option value={STATUS.DONE}>Done</option>
+              <option value={STATUS.IN_PROGRESS.id}>In progress</option>
+              <option value={STATUS.DONE.id}>Done</option>
             </select>
             <span>{error}</span>
             <div className="flex justify-end gap-2">

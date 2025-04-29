@@ -2,6 +2,8 @@
 import { auth } from "@/auth";
 import SignOutButton from "@/app/components/signoutbutton";
 import CreateTask from "@/app/components/createtask";
+import TaksList from "@/app/components/tasklist";
+import { Suspense } from "react";
 
 export default async function Dashboard() {
   const session = await auth();
@@ -15,17 +17,24 @@ export default async function Dashboard() {
             src="https://gux.tech/wp-content/uploads/2023/04/Logo-GUX-white.png"
             alt="Gux logo"
           />
+          <span>
+            Welcome, <pre className="inline">{session?.user?.email}</pre>
+          </span>
           <SignOutButton />
         </div>
       </header>
 
       <main className="flex flex-col h-screen p-6">
-        <div className="flex w-full justify-between max-w-7xl mx-auto">
-          <span>
-            Welcome, <pre className="inline">{session?.user?.email}</pre>
-          </span>
+        <section className="flex w-full justify-between max-w-7xl mx-auto mb-6">
+          <h1 className="text-3xl">List of tasks</h1>
           <CreateTask />
-        </div>
+        </section>
+
+        <section className="w-full max-w-7xl mx-auto mb-4">
+          <Suspense fallback={<p>Loading data...</p>}>
+            <TaksList />
+          </Suspense>
+        </section>
       </main>
     </>
   );
