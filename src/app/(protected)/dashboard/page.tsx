@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import LogOutButton from "@/app/components/logoutbutton";
+import SignOutButton from "@/app/components/signoutbutton";
 
 export default async function Dashboard() {
   const session = await auth();
@@ -13,7 +13,7 @@ export default async function Dashboard() {
   return (
     <main className="flex flex-col items-center h-screen px-2 pt-24 md:pt-36">
       <pre>{JSON.stringify(session)}</pre>
-      <LogOutButton />
+      <SignOutButton />
     </main>
   );
 }

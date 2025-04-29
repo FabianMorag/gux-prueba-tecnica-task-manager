@@ -1,6 +1,8 @@
-import type { NextRequest } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 import NextAuth from "next-auth";
 import authConfig from "@/auth.config";
+import { getToken } from "next-auth/jwt";
+import { PUBLIC_ROUTES } from "./app/constants";
 
 export const config = {
   matcher: [
@@ -12,5 +14,16 @@ export const config = {
 const { auth } = NextAuth(authConfig);
 
 export default auth(async function middleware(req: NextRequest) {
-  console.log("hola");
+  const token = await getToken({
+    req,
+    secret: process.env.AUTH_SECRET,
+  });
+
+  if (!token && !PUBLIC_ROUTES.includes(req.nextUrl.pathname)) {
+    if (!token) {
+      return NextResponse.redirect(new URL("/", req.url));
+    }
+  }
+
+  console.log({ token });
 });

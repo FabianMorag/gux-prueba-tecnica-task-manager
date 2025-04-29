@@ -31,4 +31,18 @@ export default {
       },
     }),
   ],
+  // callbacks: {
+  //   jwt({ token, user }) {
+  //     if (user) {
+  //       token.isAdmin = user.isAdmin;
+  //       token.img = user.img;
+  //     }
+  //     return token;
+  //   },
+  //   session({ session, token }) {
+  //     session.user.isAdmin = token.isAdmin;
+  //     session.user.img = token.img;
+  //     return session;
+  //   },
+  // },
 } satisfies NextAuthConfig;
