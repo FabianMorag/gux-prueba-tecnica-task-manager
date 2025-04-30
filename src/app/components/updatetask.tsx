@@ -31,7 +31,7 @@ export default function UpdateTask({ task }: { task: Task }) {
   const handleOpenDialog = () => {
     setOpenedDialog(true);
   };
-  const HandleCloseDialog = () => {
+  const handleCloseDialog = () => {
     setOpenedDialog(false);
   };
 
@@ -134,7 +134,7 @@ export default function UpdateTask({ task }: { task: Task }) {
               <button
                 className="px-3 py-2 rounded-full hover:cursor-pointer bg-slate-700 text-slate-200 hover:bg-slate-600"
                 type="button"
-                onClick={HandleCloseDialog}
+                onClick={handleCloseDialog}
                 disabled={isPending}
               >
                 Close
