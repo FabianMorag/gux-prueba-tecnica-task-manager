@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Task manager para rol de desarrollador en [Gux](https://gux.tech/)
 
-## Getting Started
+## Descripción
 
-First, run the development server:
+El proyecto consiste en una aplicación con registro e inicio de sesión de usuarios, donde ingresan a un dashboard para gestionar tareas. Pueden visualizar las tareas que todos los usuarios creen, pero solo tienen autorización para eliminar o editar sobre sus propias tareas creadas.
+
+El stack de desarrollo consiste en y tailwind para la creación de interfaces. Para el backend de autorización se utiliza Authjs. Finalmente para las acciones referentes a la base de datos Postgresql se utiliza el orm Prisma.
+
+Los permisos de las rutas se gestionan en el middleware, aunque las acciones sobre las tareas son server actions, por lo que no hay rutas en la api para dichas acciones.
+
+## Requisitos Previos
+
+Para ejecutar este proyecto, solo necesitarás:
+
+- [Docker](https://www.docker.com/get-started)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+
+## Instalación
+
+### 1. Clonar el repositorio
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/FabianMorag/gux-prueba-tecnica-task-manager.git
+cd gux-prueba-tecnica-task-manager
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Configuración
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+No se requieren pasos adicionales de configuración. Todos los servicios y dependencias se manejan a través de Docker.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Iniciar los servicios
 
-## Learn More
+Para iniciar todos los servicios definidos en el archivo docker-compose.yml:
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+docker-compose up
+```
