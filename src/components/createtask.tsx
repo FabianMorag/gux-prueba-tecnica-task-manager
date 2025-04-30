@@ -16,6 +16,7 @@ export default function CreateTask() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<z.infer<typeof createTaskFormSchema>>({
     resolver: zodResolver(createTaskFormSchema),
     defaultValues: {
@@ -41,6 +42,7 @@ export default function CreateTask() {
       }
 
       setOpenedDialog(false);
+      reset();
     });
   };
 
