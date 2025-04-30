@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import NextAuth from "next-auth";
 import authConfig from "@/auth.config";
 import { getToken } from "next-auth/jwt";
-import { PUBLIC_ROUTES } from "./app/constants";
+import { PUBLIC_ROUTES } from "./constants";
 
 export const config = {
   matcher: [

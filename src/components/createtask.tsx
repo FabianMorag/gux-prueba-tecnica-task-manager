@@ -2,10 +2,10 @@
 
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
-import { createTaskFormSchema } from "@/app/lib/zod";
+import { createTaskFormSchema } from "@/lib/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
-import { STATUS } from "@/app/constants";
+import { STATUS } from "@/constants";
 
 export default function CreateTask() {
   const [openedDialog, setOpenedDialog] = useState(false);

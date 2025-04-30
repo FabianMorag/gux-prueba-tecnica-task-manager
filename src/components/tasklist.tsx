@@ -1,7 +1,7 @@
-import { prismaClient } from "@/app/lib/prisma";
-import UpdateTask from "@/app/components/updatetask";
-import DeleteTask from "@/app/components/deletetask";
-import { STATUS } from "@/app/constants";
+import { prismaClient } from "@/lib/prisma";
+import UpdateTask from "@/components/updatetask";
+import DeleteTask from "@/components/deletetask";
+import { STATUS } from "@/constants";
 import { Task } from "@prisma/client";
 
 export default async function TasksList() {

@@ -1,7 +1,7 @@
 "use server";
-import { signInFormSchema } from "@/app/lib/zod";
+import { signInFormSchema } from "@/lib/zod";
 import { z } from "zod";
-import { prismaClient } from "@/app/lib/prisma";
+import { prismaClient } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { signIn } from "@/auth";
 import { AuthError } from "next-auth";

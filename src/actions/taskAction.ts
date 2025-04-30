@@ -1,6 +1,6 @@
 "use server";
 
-import { prismaClient } from "@/app/lib/prisma";
+import { prismaClient } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
 export async function deleteTaskAction(formData: FormData) {

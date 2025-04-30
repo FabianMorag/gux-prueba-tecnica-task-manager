@@ -1,14 +1,14 @@
 "use client";
 
-import { signInFormSchema } from "@/app/lib/zod";
+import { signInFormSchema } from "@/lib/zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
-import { signInAction } from "@/app/actions/signInAction";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { registerAction } from "@/actions/registerAction";
 
-export default function SignInForm() {
+export default function RegisterForm() {
   const {
     register,
     handleSubmit,
@@ -26,7 +26,7 @@ export default function SignInForm() {
 
   const onSubmitFn = (values: z.infer<typeof signInFormSchema>) => {
     startTransition(async () => {
-      const response = await signInAction(values);
+      const response = await registerAction(values);
       if (response.error) setError(response.error);
       else router.push("/dashboard");
     });
@@ -73,7 +73,7 @@ export default function SignInForm() {
         type="submit"
         disabled={isPending}
       >
-        Sign in
+        Register
       </button>
     </form>
   );

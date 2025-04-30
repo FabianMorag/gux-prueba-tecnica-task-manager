@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import { auth } from "@/auth";
-import SignOutButton from "@/app/components/signoutbutton";
-import CreateTask from "@/app/components/createtask";
-import TaksList from "@/app/components/tasklist";
+import SignOutButton from "@/components/signoutbutton";
+import CreateTask from "@/components/createtask";
+import TaksList from "@/components/tasklist";
 import { Suspense } from "react";
 
 export default async function Dashboard() {

@@ -1,4 +1,4 @@
-import { deleteTaskAction } from "@/app/actions/taskAction";
+import { deleteTaskAction } from "@/actions/taskAction";
 import { auth } from "@/auth";
 
 export default async function DeleteTask({ taskId }: { taskId: string }) {
