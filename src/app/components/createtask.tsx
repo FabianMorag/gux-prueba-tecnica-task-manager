@@ -64,11 +64,11 @@ export default function CreateTask() {
         open={openedDialog}
       >
         <div className="relative w-full max-w-xl px-4 py-6 rounded-lg bg-slate-800">
+          <h2 className="text-xl text-center">Task</h2>
           <form
             className="flex flex-col gap-3"
             onSubmit={handleSubmit(handleCreateTask)}
           >
-            <h2 className="text-xl text-center">Task</h2>
             <label htmlFor="taskTitle">Task title</label>
             <input
               className="px-2 py-1 rounded-lg bg-slate-900 focus:outline-slate-600 outline outline-slate-700"

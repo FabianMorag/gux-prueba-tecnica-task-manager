@@ -9,7 +9,7 @@ import { z } from "zod";
 import { STATUS } from "@/app/constants";
 
 export default function UpdateTask({ task }: { task: Task }) {
-  const { title, description, status } = task;
+  const { id, title, description, status } = task;
 
   const [openedDialog, setOpenedDialog] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -21,6 +21,7 @@ export default function UpdateTask({ task }: { task: Task }) {
   } = useForm<z.infer<typeof formTaskFormSchema>>({
     resolver: zodResolver(formTaskFormSchema),
     defaultValues: {
+      taskId: id,
       title: title,
       description: description || "",
       status: status,
@@ -83,11 +84,12 @@ export default function UpdateTask({ task }: { task: Task }) {
         open={openedDialog}
       >
         <div className="relative w-full max-w-xl px-4 py-6 rounded-lg bg-slate-800">
+          <h2 className="text-xl text-center">Update task</h2>
           <form
             className="flex flex-col gap-3"
             onSubmit={handleSubmit(handleUpdateTask)}
           >
-            <h2 className="text-xl text-center">Update task</h2>
+            <input type="hidden" name="taskId" value={id} />
             <label htmlFor="taskTitle">Task title</label>
             <input
               className="px-2 py-1 rounded-lg bg-slate-900 focus:outline-slate-600 outline outline-slate-700"

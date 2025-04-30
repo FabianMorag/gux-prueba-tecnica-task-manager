@@ -10,6 +10,7 @@ export const signInFormSchema = object({
 });
 
 export const formTaskFormSchema = object({
+  taskId: string(),
   title: string({ required_error: "Task title is required" }).min(
     1,
     "Task title is required"

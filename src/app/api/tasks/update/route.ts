@@ -17,8 +17,10 @@ export async function POST(req: NextRequest) {
     userId: token?.userId as string,
   };
 
-  const task = await prismaClient.task.create({ data });
-  console.log(task);
+  const task = await prismaClient.task.update({
+    where: { id: json.taskId, userId: data.userId },
+    data,
+  });
 
-  return NextResponse.json(data);
+  return NextResponse.json(task);
 }
