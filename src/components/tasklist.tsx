@@ -14,8 +14,6 @@ export default async function TasksList() {
     },
   })) as Task[];
 
-  console.log(tasks);
-
   return (
     <table className="w-full table-fixed outline outline-slate-600 rounded-lg [&_td]:p-2 [&_th]:p-2">
       <thead>

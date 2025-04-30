@@ -33,11 +33,21 @@ export async function deleteTaskAction(formData: FormData) {
   const userId = formData.get("userId") as string;
 
   try {
+    const taskToDelete = await prismaClient.task.findUnique({
+      where: { id: taskId },
+    });
+    if (!taskToDelete) {
+      return { status: 404, error: "Task not found" };
+    }
+    if (taskToDelete.userId !== userId) {
+      return { status: 403, error: "Unauthorized to delete" };
+    }
     await prismaClient.task.delete({
       where: { id: taskId, userId: userId },
     });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
-    console.error("Error deleting task:", error);
+    return { status: 500, error: "Task creation failed" };
   }
 
   revalidatePath("/dashboard");
