@@ -5,7 +5,9 @@ import { STATUS } from "@/app/constants";
 import { Task } from "@prisma/client";
 
 export default async function TasksList() {
-  const tasks: Task[] = await prismaClient.task.findMany();
+  const tasks: Task[] = await prismaClient.task.findMany({
+    orderBy: { createdAt: "desc" },
+  });
 
   return (
     <table className="w-full table-fixed outline outline-slate-600 rounded-lg [&_td]:p-2 [&_th]:p-2">
