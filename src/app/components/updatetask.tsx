@@ -1,7 +1,7 @@
 "use client";
 
 import { Task } from "@prisma/client";
-import { formTaskFormSchema } from "@/app/lib/zod";
+import { updateTaskFormSchema } from "@/app/lib/zod";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,8 +18,8 @@ export default function UpdateTask({ task }: { task: Task }) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<z.infer<typeof formTaskFormSchema>>({
-    resolver: zodResolver(formTaskFormSchema),
+  } = useForm<z.infer<typeof updateTaskFormSchema>>({
+    resolver: zodResolver(updateTaskFormSchema),
     defaultValues: {
       taskId: id,
       title: title,
@@ -35,7 +35,7 @@ export default function UpdateTask({ task }: { task: Task }) {
     setOpenedDialog(false);
   };
 
-  const handleUpdateTask = (values: z.infer<typeof formTaskFormSchema>) => {
+  const handleUpdateTask = (values: z.infer<typeof updateTaskFormSchema>) => {
     startTransition(async () => {
       fetch("/api/tasks/update", {
         method: "POST",

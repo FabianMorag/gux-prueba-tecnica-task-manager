@@ -9,8 +9,17 @@ export const signInFormSchema = object({
     .min(4, "Password must be 4 at least"),
 });
 
-export const formTaskFormSchema = object({
+export const updateTaskFormSchema = object({
   taskId: string(),
+  title: string({ required_error: "Task title is required" }).min(
+    1,
+    "Task title is required"
+  ),
+  description: string().optional(),
+  status: string(),
+});
+
+export const createTaskFormSchema = object({
   title: string({ required_error: "Task title is required" }).min(
     1,
     "Task title is required"

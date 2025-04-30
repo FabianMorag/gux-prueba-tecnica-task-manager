@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
-import { formTaskFormSchema } from "@/app/lib/zod";
+import { createTaskFormSchema } from "@/app/lib/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import { STATUS } from "@/app/constants";
@@ -15,8 +15,8 @@ export default function CreateTask() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<z.infer<typeof formTaskFormSchema>>({
-    resolver: zodResolver(formTaskFormSchema),
+  } = useForm<z.infer<typeof createTaskFormSchema>>({
+    resolver: zodResolver(createTaskFormSchema),
     defaultValues: {
       title: "",
       description: "",
@@ -31,7 +31,7 @@ export default function CreateTask() {
     setOpenedDialog(false);
   };
 
-  const handleCreateTask = (values: z.infer<typeof formTaskFormSchema>) => {
+  const handleCreateTask = (values: z.infer<typeof createTaskFormSchema>) => {
     startTransition(async () => {
       fetch("/api/tasks/create", {
         method: "POST",
