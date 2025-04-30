@@ -6,13 +6,6 @@ RUN apt-get update -y \
 WORKDIR /app
 COPY . .
 
-RUN bun install
-RUN bun run auth
-RUN chmod +x docker-entrypoint.sh
-RUN bun run prisma-generate
-# RUN bun run prisma-migrate
-RUN bun run build
+RUN chmod +x /app/docker-entrypoint.sh
 
-ENTRYPOINT [ "docker-entrypoint.sh" ]
-
-# CMD ["bun", "run", "start"]
+ENTRYPOINT ["/bin/sh", "/app/docker-entrypoint.sh"]
