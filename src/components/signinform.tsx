@@ -34,7 +34,7 @@ export default function SignInForm() {
 
   return (
     <form
-      className="flex flex-col min-w-96"
+      className="flex flex-col md:min-w-96"
       onSubmit={handleSubmit(onSubmitFn)}
     >
       <label className="font-medium" htmlFor="email">
