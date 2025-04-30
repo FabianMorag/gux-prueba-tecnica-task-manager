@@ -5,7 +5,7 @@ export const STATUS = {
   IN_PROGRESS: {
     id: "IN_PROGRESS",
     text: "In progress",
-    color: "oklch(90.5% 0.182 98.111)",
+    color: "oklch(68.1% 0.162 75.834)",
   },
-  DONE: { id: "DONE", text: "Done", color: "oklch(79.2% 0.209 151.711)" },
+  DONE: { id: "DONE", text: "Done", color: "oklch(52.7% 0.154 150.069)" },
 };

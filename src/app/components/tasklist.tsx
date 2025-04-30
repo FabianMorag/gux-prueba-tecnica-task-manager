@@ -1,10 +1,11 @@
 import { prismaClient } from "@/app/lib/prisma";
 import UpdateTask from "@/app/components/updatetask";
 import DeleteTask from "@/app/components/deletetask";
+import { STATUS } from "@/app/constants";
+import { Task } from "@prisma/client";
 
 export default async function TasksList() {
-  const tasks = await prismaClient.task.findMany();
-  console.log(tasks);
+  const tasks: Task[] = await prismaClient.task.findMany();
 
   return (
     <table className="w-full table-fixed outline outline-slate-600 rounded-lg [&_td]:p-2 [&_th]:p-2">
@@ -19,16 +20,24 @@ export default async function TasksList() {
         </tr>
       </thead>
       <tbody>
-        {tasks.map(({ id, title, description, status }, index) => (
+        {tasks.map((task, index) => (
           <tr className="odd:bg-slate-900" key={index}>
-            <td className="overflow-hidden text-ellipsis">{title}</td>
-            <td className="overflow-hidden text-ellipsis">{description}</td>
+            <td className="overflow-hidden text-ellipsis">{task.title}</td>
+            <td className="overflow-hidden text-ellipsis">
+              {task.description}
+            </td>
             <td className="text-center overflow-hidden text-ellipsis">
-              {status}
+              <span
+                style={{ backgroundColor: STATUS[task.status].color }}
+                className="px-1 rounded-xl"
+              >
+                {" "}
+                {STATUS[task.status].text}
+              </span>
             </td>
             <td className="flex justify-center gap-2">
-              <UpdateTask taskId={id} />
-              <DeleteTask taskId={id} />
+              <UpdateTask task={task} />
+              <DeleteTask taskId={task.id} />
             </td>
           </tr>
         ))}

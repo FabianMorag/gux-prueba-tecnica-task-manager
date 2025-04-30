@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
-import { createTaskFormSchema } from "@/app/lib/zod";
+import { formTaskFormSchema } from "@/app/lib/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import { STATUS } from "@/app/constants";
@@ -15,8 +15,8 @@ export default function CreateTask() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<z.infer<typeof createTaskFormSchema>>({
-    resolver: zodResolver(createTaskFormSchema),
+  } = useForm<z.infer<typeof formTaskFormSchema>>({
+    resolver: zodResolver(formTaskFormSchema),
     defaultValues: {
       title: "",
       description: "",
@@ -24,14 +24,14 @@ export default function CreateTask() {
     },
   });
 
-  const handleCloseDialog = () => {
+  const handleOpenDialog = () => {
     setOpenedDialog(true);
   };
   const HandleCloseDialog = () => {
     setOpenedDialog(false);
   };
 
-  const handleCreateTask = (values: z.infer<typeof createTaskFormSchema>) => {
+  const handleCreateTask = (values: z.infer<typeof formTaskFormSchema>) => {
     startTransition(async () => {
       fetch("/api/tasks/create", {
         method: "POST",
@@ -55,7 +55,7 @@ export default function CreateTask() {
     <>
       <button
         className="w-auto px-3 py-2 rounded-full bg-slate-100 text-slate-950 hover:cursor-pointer hover:bg-slate-200"
-        onClick={handleCloseDialog}
+        onClick={handleOpenDialog}
       >
         Create task
       </button>

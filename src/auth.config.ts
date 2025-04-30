@@ -38,11 +38,9 @@ export default {
       }
       return token;
     },
+    session({ session, token }) {
+      session.user.userId = token.userId;
+      return session;
+    },
   },
-  //   session({ session, token }) {
-  //     session.user.isAdmin = token.isAdmin;
-  //     session.user.img = token.img;
-  //     return session;
-  //   },
-  // },
 } satisfies NextAuthConfig;
