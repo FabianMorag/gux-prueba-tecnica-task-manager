@@ -24,4 +24,8 @@ export default auth(async function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL("/", req.url));
     }
   }
+
+  if (token && PUBLIC_ROUTES.includes(req.nextUrl.pathname)) {
+    return NextResponse.redirect(new URL("/dashboard", req.url));
+  }
 });
