@@ -24,7 +24,7 @@ export default function UpdateTask({ task }: { task: Task }) {
     defaultValues: {
       taskId: id,
       title: title,
-      description: description || "",
+      description: description ?? "",
       status: status,
     },
   });
@@ -82,7 +82,6 @@ export default function UpdateTask({ task }: { task: Task }) {
             className="flex flex-col gap-3"
             onSubmit={handleSubmit(handleUpdateTask)}
           >
-            <input type="hidden" name="taskId" value={id} />
             <label htmlFor="taskTitle">Task title</label>
             <input
               className="px-2 py-1 rounded-lg bg-slate-900 focus:outline-slate-600 outline outline-slate-700"
@@ -102,18 +101,17 @@ export default function UpdateTask({ task }: { task: Task }) {
               id="taskDescription"
               {...register("description")}
             />
-
             <label htmlFor="taskStatus">Status</label>
             <select
               className="p-2 mb-4 rounded-lg bg-slate-900"
               id="taskStatus"
               {...register("status")}
             >
-              <option value={STATUS.TODO.id} defaultChecked>
-                To do
+              <option value={STATUS.TODO.id}>{STATUS.TODO.text}</option>
+              <option value={STATUS.IN_PROGRESS.id}>
+                {STATUS.IN_PROGRESS.text}
               </option>
-              <option value={STATUS.IN_PROGRESS.id}>In progress</option>
-              <option value={STATUS.DONE.id}>Done</option>
+              <option value={STATUS.DONE.id}>{STATUS.DONE.text}</option>
             </select>
             <span>{error}</span>
             <div className="flex justify-end gap-2">

@@ -22,8 +22,8 @@ export default async function TasksList() {
         </tr>
       </thead>
       <tbody>
-        {tasks.map((task, index) => (
-          <tr className="odd:bg-slate-900" key={index}>
+        {tasks.map((task) => (
+          <tr className="odd:bg-slate-900" key={task.id}>
             <td className="overflow-hidden text-ellipsis">{task.title}</td>
             <td className="overflow-hidden text-ellipsis">
               {task.description}
