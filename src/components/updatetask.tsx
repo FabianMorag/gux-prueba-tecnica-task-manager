@@ -8,12 +8,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { STATUS } from "@/constants";
 import { updateTaskAction } from "@/actions/taskAction";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function UpdateTask({ task }: { task: Task }) {
   const { id, title, description, status } = task;
 
   const [openedDialog, setOpenedDialog] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
   const {
     register,
@@ -40,16 +40,19 @@ export default function UpdateTask({ task }: { task: Task }) {
     startTransition(async () => {
       const response = await updateTaskAction(values);
 
-      if (response?.error) {
-        setError(response?.error);
-      }
-
       setOpenedDialog(false);
+
+      if (response?.error) {
+        toast.error(response?.error);
+      } else {
+        toast.success("Task updated successfully");
+      }
     });
   };
 
   return (
     <>
+      <Toaster position="bottom-right" reverseOrder={false} />
       <button
         className="hover:cursor-pointer hover:bg-slate-700 p-2 rounded-lg"
         onClick={handleOpenDialog}
@@ -113,7 +116,6 @@ export default function UpdateTask({ task }: { task: Task }) {
               </option>
               <option value={STATUS.DONE.id}>{STATUS.DONE.text}</option>
             </select>
-            <span>{error}</span>
             <div className="flex justify-end gap-2">
               <button
                 className="px-3 py-2 rounded-full hover:cursor-pointer bg-slate-50 text-slate-950 hover:bg-slate-200"

@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import { STATUS } from "@/constants";
 import { createTaskAction } from "@/actions/taskAction";
+import { Toaster, toast } from "react-hot-toast";
 
 export default function CreateTask() {
   const [openedDialog, setOpenedDialog] = useState(false);
@@ -44,10 +45,13 @@ export default function CreateTask() {
       setOpenedDialog(false);
       reset();
     });
+
+    toast.success("Task created successfully");
   };
 
   return (
     <>
+      <Toaster position="bottom-right" reverseOrder={false} />
       <button
         className="w-auto px-3 py-2 rounded-full bg-slate-100 text-slate-950 hover:cursor-pointer hover:bg-slate-200"
         onClick={handleOpenDialog}

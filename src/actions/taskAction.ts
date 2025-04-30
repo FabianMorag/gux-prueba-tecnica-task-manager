@@ -28,9 +28,9 @@ export const createTaskAction = async (
   }
 };
 
-export async function deleteTaskAction(formData: FormData) {
-  const taskId = formData.get("taskId") as string;
-  const userId = formData.get("userId") as string;
+export async function deleteTaskAction(taskId: string) {
+  const token = await auth();
+  const userId = token?.user?.userId as string;
 
   try {
     const taskToDelete = await prismaClient.task.findUnique({

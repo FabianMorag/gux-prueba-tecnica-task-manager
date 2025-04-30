@@ -1,17 +1,31 @@
-import { deleteTaskAction } from "@/actions/taskAction";
-import { auth } from "@/auth";
+"use client";
 
-export default async function DeleteTask({ taskId }: { taskId: string }) {
-  const token = await auth();
-  const userId = token?.user?.userId;
+import { deleteTaskAction } from "@/actions/taskAction";
+import { useTransition } from "react";
+import toast, { Toaster } from "react-hot-toast";
+
+export default function DeleteTask({ taskId }: { taskId: string }) {
+  const [isPending, startTransition] = useTransition();
+
+  const handleDeleteClick = () => {
+    startTransition(async () => {
+      const response = await deleteTaskAction(taskId);
+      if (response?.error) {
+        toast.error(response?.error);
+      } else {
+        toast.success("Task deleted successfully");
+      }
+    });
+  };
 
   return (
-    <form action={deleteTaskAction}>
-      <input type="hidden" name="userId" value={userId} />
-      <input type="hidden" name="taskId" value={taskId} />
+    <>
+      <Toaster position="bottom-right" reverseOrder={false} />
       <button
         className="hover:cursor-pointer hover:bg-red-700 p-2 rounded-lg"
         type="submit"
+        onClick={handleDeleteClick}
+        disabled={isPending}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -33,6 +47,6 @@ export default async function DeleteTask({ taskId }: { taskId: string }) {
           <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
         </svg>
       </button>
-    </form>
+    </>
   );
 }

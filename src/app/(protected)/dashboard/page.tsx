@@ -24,7 +24,7 @@ export default async function Dashboard() {
         </div>
       </header>
 
-      <main className="flex flex-col h-screen p-6">
+      <main className="flex flex-col p-6">
         <section className="flex w-full justify-between max-w-7xl mx-auto mb-6">
           <h1 className="text-3xl">List of tasks</h1>
           <CreateTask />
