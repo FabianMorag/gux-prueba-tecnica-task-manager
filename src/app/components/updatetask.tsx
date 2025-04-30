@@ -129,7 +129,7 @@ export default function UpdateTask({ task }: { task: Task }) {
                 type="submit"
                 disabled={isPending}
               >
-                Save task
+                Update task
               </button>
               <button
                 className="px-3 py-2 rounded-full hover:cursor-pointer bg-slate-700 text-slate-200 hover:bg-slate-600"

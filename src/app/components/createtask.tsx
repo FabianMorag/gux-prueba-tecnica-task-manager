@@ -64,7 +64,7 @@ export default function CreateTask() {
         open={openedDialog}
       >
         <div className="relative w-full max-w-xl px-4 py-6 rounded-lg bg-slate-800">
-          <h2 className="text-xl text-center">Task</h2>
+          <h2 className="text-xl text-center">Create task</h2>
           <form
             className="flex flex-col gap-3"
             onSubmit={handleSubmit(handleCreateTask)}
