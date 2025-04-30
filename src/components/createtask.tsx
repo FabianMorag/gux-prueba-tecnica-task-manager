@@ -6,6 +6,7 @@ import { createTaskFormSchema } from "@/lib/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import { STATUS } from "@/constants";
+import { createTaskAction } from "@/actions/taskAction";
 
 export default function CreateTask() {
   const [openedDialog, setOpenedDialog] = useState(false);
@@ -33,21 +34,13 @@ export default function CreateTask() {
 
   const handleCreateTask = (values: z.infer<typeof createTaskFormSchema>) => {
     startTransition(async () => {
-      fetch("/api/tasks/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          setOpenedDialog(false);
-        })
-        .catch((err) => {
-          setError(err);
-        });
+      const response = await createTaskAction(values);
+
+      if (response?.error) {
+        setError(response?.error);
+      }
+
+      setOpenedDialog(false);
     });
   };
 
