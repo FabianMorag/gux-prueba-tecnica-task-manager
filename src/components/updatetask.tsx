@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { STATUS } from "@/constants";
+import { updateTaskAction } from "@/actions/taskAction";
 
 export default function UpdateTask({ task }: { task: Task }) {
   const { id, title, description, status } = task;
@@ -37,21 +38,13 @@ export default function UpdateTask({ task }: { task: Task }) {
 
   const handleUpdateTask = (values: z.infer<typeof updateTaskFormSchema>) => {
     startTransition(async () => {
-      fetch("/api/tasks/update", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          setOpenedDialog(false);
-        })
-        .catch((err) => {
-          setError(err);
-        });
+      const response = await updateTaskAction(values);
+
+      if (response?.error) {
+        setError(response?.error);
+      }
+
+      setOpenedDialog(false);
     });
   };
 
