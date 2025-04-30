@@ -14,6 +14,14 @@ export default async function TasksList() {
     },
   })) as Task[];
 
+  if (!tasks || tasks.length === 0) {
+    return (
+      <div className="flex justify-center items-center w-full p-4">
+        <p className="text-slate-400">No tasks</p>
+      </div>
+    );
+  }
+
   return (
     <table className="w-full table-fixed outline outline-slate-600 rounded-lg [&_td]:p-2 [&_th]:p-2">
       <thead>
