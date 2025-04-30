@@ -30,7 +30,7 @@ export const registerAction = async (
     return { status: 200 };
   } catch (error) {
     if (error instanceof AuthError) {
-      return { error: error.cause?.err?.message };
+      return { status: 500, error: "Error trying to register new account" };
     }
     return { status: 500, error: "Something went wrong" };
   }
