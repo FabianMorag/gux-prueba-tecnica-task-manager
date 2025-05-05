@@ -4,7 +4,7 @@
 
 El proyecto consiste en una aplicación con registro e inicio de sesión de usuarios, donde ingresan a un dashboard para gestionar tareas. Pueden visualizar las tareas que todos los usuarios creen, pero solo tienen autorización para eliminar o editar sobre sus propias tareas creadas.
 
-El stack de desarrollo consiste en y tailwind para la creación de interfaces. Para el backend de autorización se utiliza Authjs. Finalmente para las acciones referentes a la base de datos Postgresql se utiliza el orm Prisma.
+El stack de desarrollo consiste en nextjs y tailwind para la creación de interfaces. Para el backend de autorización se utiliza Authjs. Finalmente para las acciones referentes a la base de datos Postgresql se utiliza el orm Prisma.
 
 Los permisos de las rutas se gestionan en el middleware, aunque las acciones sobre las tareas son server actions, por lo que no hay rutas en la api para dichas acciones.
 
